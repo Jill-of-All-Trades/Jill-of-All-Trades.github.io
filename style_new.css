@@ -1,0 +1,323 @@
+/* Marquees :peepotheif: */
+
+.motdmarquee {
+    height: 40px;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .motdmarquee div {
+    display: block;
+    width: 150%;
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+  
+    animation: motd 14s linear infinite;
+  }
+  
+  .motdmarquee span {
+    display: block;
+    float: right;
+    width: 75%;
+  }
+  
+  @keyframes motd {
+    0% { left: 100%;}
+    100% { left: -200%; }
+  }
+  
+  .motd-container {
+    color: #b7c2ab;
+    background: #08081c;
+    padding: 0;
+    border: 1mm ridge #b7c2ab;
+  }
+  
+  .motd-text {
+    color: #b7c2ab;
+    font-size: 1.4em;
+    height: 100%; 
+  }
+  
+  /*
+      BACKGROUND
+  */
+  
+  .scroll_diag { /*Diagonal background scrolling*/
+      animation: diag 120s linear infinite;
+    }
+  
+  @keyframes diag {
+    0% {
+      background-position-x: 0%;
+      background-position-y: 0%;
+    }
+    100% {
+      background-position-x: 100%;
+      background-position-y: 100%;
+    }
+  }
+  
+  .anim_bounce {
+    animation: bounce 1s ease-in-out infinite; 
+  }
+  @keyframes bounce {
+    0% {transform: scale(1);}
+    50% {transform: scale(1.02);}
+    100% {transform: scale(1);}
+  }
+  
+  /*
+      WRAPPERs
+  */
+  .pagewrapper {
+    width: 1000px;
+    height: fit-content;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .bio {
+    text-align: left; 
+    margin: 2px;
+  }
+  
+  /*====*/
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: "Mono", "Consolas", "MS PGothic", sans-serif;
+    padding: 20px;
+    background-color: #2f291a;
+    
+    background-image: url("img/pattern2.png");
+    background-size: 5em;
+    background-attachment: fixed;
+  
+    -ms-interpolation-mode: nearest-neighbor;
+  }
+  
+  /* Header/Blog Title */
+  .header {
+    padding: 30px;
+    font-size: 80px;
+    text-align: center;
+    
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #b7c2ab;
+    background-color: #08081c; /* 151515 */
+    
+    text-shadow: -0.09em 0 0 #e43800,  0.09em 0 0 #5c606f;
+    letter-spacing: 0.05em;
+    font-family: "Helvetica Neue", sans-serif;
+    
+    border-radius: 8px;
+  }
+  
+  /* Create two unequal columns that floats next to each other */
+  /* Left column */
+  .leftcolumn {
+    float: left;
+    width: 75%;
+  }
+  
+  /* Right column */
+  .rightcolumn {
+    float: left;
+    width: 25%;
+    padding-left: 20px;
+  }
+  
+  /* Fake image */
+  .fakeimg {
+    background-color: #343735;
+    width: 100%;
+    padding: 20px;
+  }
+  
+  /* Add a card effect for articles */
+  .card {
+    padding: 10px;
+    margin-top: 20px;
+    color: #b7c2ab;
+    background: #08081c; /*151515*/
+    border-radius: 8px;
+    text-align: justify;
+  }
+  
+  .card.title {
+    text-align: center;
+    color: #baa7a8; 
+    text-shadow: 1px 1px 1px #5c606f; 
+  }
+  
+  .staff-container {
+    display: grid; 
+    grid-template-columns: 33.3% 33.3% 33.3%; 
+    background: #08081c; 
+    margin-top: 5px;
+    border-radius: 8px;
+  }
+  
+  .card.bio {
+    margin-top: 0; 
+  }
+  
+  .card.nav {
+    margin-top: 0px; 
+  }
+  
+  .micro-image {
+    display: inline; 
+    float: left; 
+    margin-right: 5px;
+  }
+  
+  .micro-title {
+    color: #e43800; 
+    display: inline; 
+    text-shadow: 1px 1px 1px #5c606f;
+  }
+  
+  .game-grid {
+    display: grid; 
+    grid-template-columns: 33% 33% 33%; 
+    background: #08081c; /*151515*/
+    margin-top: 5px;
+    border-radius: 8px;
+  }
+  
+  .gamecard {
+    padding: 10px;
+    margin: 10px;
+    background: #6A2443;
+    border-radius: 3px;
+    transition: transform .2s;
+  }
+  
+  .gamecard:hover {
+   transform: scale(1.1); 
+  }
+  
+  .gameline {
+    width: 100%; 
+    max-height: 250px; 
+    background: #08081c; 
+    border-radius: 8px; 
+    margin-top: 5px; 
+    padding: 20px; 
+    box-sizing: border-box;
+  }
+  
+  .zoom {
+     transition: transform .2s;
+  }
+  .zoom:hover {
+   transform: scale(1.1); 
+  }
+  
+  /* Clear floats after the columns */
+  .pagewrapper:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  /* Footer */
+  .footer {
+    padding: 20px;
+    text-align: center;
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -20px;
+    color: #b7c2ab;
+    background: #151515;
+    border-radius: 5px;
+  }
+  
+  .rainbow-text {
+    font-weight: bold;
+    background: linear-gradient(90deg, red, orange, yellow, green, cyan, blue, violet);
+    background-size: 400%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: rainbow 5s linear infinite;
+  }
+  
+  @keyframes rainbow {
+    0% {
+      background-position: 0% 50%;
+    }
+    100% {
+      background-position: 100% 50%;
+    }
+  }
+  
+  #navlink {
+    text-decoration: none;
+    color: #e43800;
+    
+  }
+  
+  #navlink:hover {
+    background-color: #e43800;
+    color: white;
+    text-shadow:  0.09em 0.09em 0 #5c606f;
+    border-radius: 4px;
+  }
+
+  .blog {
+    background-color: #08081c;
+    padding: 1rem;
+    border: 2px solid #5c606f;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+    min-height: 150px;
+    max-height: 265px;
+    margin-top: 5px;
+    overflow-y: auto;
+    color: #baa7a8;
+  }
+
+  .blog .title {
+    font-size: 1.2rem;
+    margin-top: 0;
+  }
+  .blog .content {
+    text-align: justify;
+  }
+
+  .blog .content hr{
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #ccc;
+    margin: 1em 0;
+    padding: 0;
+  }
+
+  .blog::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .blog::-webkit-scrollbar-thumb {
+      background: #5c606f;
+      border-color: #08081c;
+      border-radius: 10px;
+  }
+
+  .blog::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.0);
+      border-radius: 10px;
+  }

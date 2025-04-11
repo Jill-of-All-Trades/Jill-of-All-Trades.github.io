@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+    <title>Have you lost?</title>
+    <style>    
+      .message {
+         text-align: center; 
+         font-family: Consolas; 
+         color: #EEEEEE;
+         width: 50%;
+         margin:auto;
+         max-height: 100vh;
+      }
+      
+      .message .title {
+        font-size: 3vmin; 
+        margin-top: 20px;
+        margin-bottom: 20px;
+        text-shadow: 2px 2px 2px #5c606f;
+      }
+      
+      .message .desc {
+        font-size: 2.4vmin; 
+      }
+      
+      .link {
+        display: inline;
+        color: rgb(0, 255, 255); 
+        text-shadow: 1px 1px 1px rgb(0, 55, 156);
+      }
+      
+      .pic {
+        display: block;
+        margin-right: auto;
+        margin-left: auto;
+        width: 50%;
+      }
+      
+    </style>
+  </head>
+  <body style="background-color: #151515;">
+
+        <!-- <img src="img/lost.jpg" style="max-width: 100%; max-height: 100vh;"> -->
+         <img src="./img/absolve_preview2.gif" class="pic">
+
+      <div class="message">
+        <div class="title">
+          Have you... lost?
+        </div>
+        <div class="desc">
+          It's easy to get lost in your search for answers and knowledge. 
+          You've come so far, and it's brought you here.<br>
+          But there's nothing here... Take a break and try to get back to your 
+          <a href="https://jill-of-all-trades.github.io/" class="link">roots</a>. 
+          <br><br><br>
+          <p style="white-space:pre; font-size: 1.5vmin">
+    ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⢀⢄⠆⠆⠃⠁⠂⠀⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⢀⢠⡰⡜⡎⡊⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠁⢡⢠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⡄⣎⠮⡣⡑⢌⢂⠢⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⢈⠊⠠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⢠⢰⢕⢏⢪⢨⢂⢊⠢⠡⡈⡂⡐⢀⠠⢀⠐⠀⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠠⣸⡪⢇⠣⡊⡢⢑⠐⠄⠅⡁⡂⠔⡐⡐⡨⢐⢈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⡰⣝⢎⢪⢘⠌⡂⠂⡐⠨⠠⡁⡢⡸⡨⡢⡃⠎⠔⠠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⡂⠄⠠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⡯⡪⡊⠆⠅⠡⠀⠀⠄⡁⡂⡪⡪⡪⢘⠐⡈⡠⠠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⠪⡨⠀⠀⠀⡀⡠⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⡇⢕⠌⠅⠁⠀⠐⠀⠀⠄⡂⡗⠕⢨⢴⡞⡎⡊⢬⡠⠀⠀⠀⠀⠀⠀⠀⠀⠀⠠⢐⠈⡐⡤⣦⢷⢙⢊⣂⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⡪⡂⡃⠁⠀⠀⠀⠐⠀⠂⠅⠂⣜⡿⡯⡪⠂⠀⠀⠀⠀⠀⠀⠌⣆⠄⠀⠀⠀⠀⠀⢦⢿⣟⢯⢑⠅⠀⠈⠀⠀⠀⠀⢐⢄⠄⠀⠀⠀⠀
+⡪⡂⢂⠀⠀⠀⢀⠁⠀⠡⠀⠀⢫⢿⢌⠂⠐⠀⠀⠀⠀⠀⠀⢨⡺⠌⠀⠀⠀⠀⠀⢝⣿⡳⡑⠔⠀⠀⠀⠀⠀⠀⠀⠠⡻⡅⠀⠀⠀⠀
+⡪⢂⠂⠀⠀⠀⠄⠀⠄⠂⠡⠀⠀⠉⠃⠄⠀⠀⠀⠀⠀⠀⠀⠂⠁⠁⠀⠀⠀⠀⠈⠀⠊⢏⠪⠀⠀⠀⠀⠀⠀⠀⠀⠁⠁⠀⠀⠀⠀⠀
+⠌⠠⠀⠀⠀⠀⠀⠀⠀⠀⠂⠐⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡀⠀⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠈⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠂⠂⠢⡀⠄⡐⡀⡂⢌⠠⠀⠂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⢈⠠⠀⢀⠀⠀⠀⠁⠐⠐⠈⠂⠑⠈⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+⡂⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⠀⠂⠠⠀⢀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+          <br>
+          </p>
+        </div>
+      </div>
+      
+ 
+  </body>
+</html>
