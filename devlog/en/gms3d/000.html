@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+
+    <link href="../../basics.css" rel="stylesheet"/>
+
+    <title>GameMaker 3D - Basics</title>
+
+    <!-- Fira Code -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
+  </head>
+
+  <body class="back">
+
+    <div class="container-solid center" style="width: 1000px; height: 4000px; margin-top: 80vh;">
+      <div class="text-code" style="font-size: 30px; text-align: center;">
+        ~ The Basics of 3D Games ~
+      </div>
+      <hr>
+
+      <div id="article-content" class="yomogi-regular text-size-def" >
+        <p>* Intro </p>
+        <p>* What is a 3D object</p>
+        <p>* How to build 3D objects</p>
+        <p>* What is a 3D World</p>
+        <p>* What is a 3D Camera</p>
+        <p>* Render 3D World on 2D screen using Shaders</p>
+        <p>* Conclusion</p>
+      </div>
+      <hr>
+
+      <div id="intro" class="yomogi-regular">
+        <p class="subheader">Intro</p>
+        <p class="text-size-def">
+          Hello again! I'm Nick, a software engineer and hobbyst game developer. 
+          Recently, I decided to share the experience I've gained over several years of developing video games. I hope you will find it useful!
+          <br><br>
+          In this article, I'll cover the basic concepts of creating 3D games. 
+          Unlike most 3D engines, such as Unity, Godot or UE, Gamemaker does not have extensive 3D support. 
+          To display any 3D object, you need to assemble it yourself and run it through a special shader. 
+          But first things first.
+        </p>
+      </div>
+
+      <div id="001" class="yomogi-regular">
+        <p class="subheader">What is a 3D object</p>
+
+        <div class="section-important">
+          <img src="../../../img/mayuri-important.png" alt="Important!" class="left-image icon-size">
+            <div class="text-size-def">
+              Any <span class="hg_green">3D object</span> is <span class="hg_green">a sequential set of vertices</span> 
+              which is called <span class="hg_yellow">Vertex Buffer</span>. 
+              Each <span class="hg_green">vertex</span> includes a certain <span class="hg_green">sequential set of information</span>, 
+              such as - a position in the world space (X, Y, Z coordinates), normal vector, texture UV-coordinates, and so on. 
+              The rules that specify what must be stored at a vertex are called <span class="hg_yellow">Vertex Format</span>.
+            </div>
+        </div>
+
+        <p class="text-size-def">
+          To display any 3D object, all vertices must have at least a position in 3D space - X, Y, and Z coordinates.
+          The X, Y, Z values are represented by floating-point numbers (like <span class="text-code">10,5</span>).<br>
+          For example, let's take <span class="hg_green">four vertices storing coordinates</span> shown in the image below.
+          Using them, we will assemble the simplest <span class="hg_green">square</span> (yes, it can also be in 3D, although it's an ordinary plane).
+        </p>
+
+        <img src="../../../img/explains/vertex1.gif" alt="Vertex explain 1" class="picture" style="width: 256px; height: 256px;">
+
+      </div>
+      
+      <div id="002" class="yomogi-regular">
+        <p class="subheader">How to build 3D objects</p>
+
+        <p class="text-size-def">
+          Great! We have vertices. But to make a full square we still need <span class="hg_green">edges</span>.
+          And here the <span class="hg_green">order in which the vertices are stored</span> in the <span class="hg_yellow">Vertex Buffer</span> begins to play a role.
+          <br><br>
+          Before sending our square to the renderer (GPU), we must tell the computer <span class="hg_green">what primitive it should build</span> - 
+          <span class="hg_yellow">points, straight lines, triangles,</span> or <span class="hg_yellow">quads</span>. There are others, but we'll limit ourselves to these for now.
+          <br><br>
+          After that, the <span style="font-weight: bold;">GPU will sequentially go through each vertex in the order in which they are in the vertex buffer</span> and build the required primitive.
+          <br><br>
+          To better understand what I'm talking about, let's index the vertices in the order in which they would be in the buffer, 
+          and see what the result will look like with different primitives.
+        </p>
+        
+        <div style="display: flex; justify-content: center; gap: 10px;">
+          <img src="../../../img/explains/vertex-lines.gif" alt="Vertex Lines" class="picture" style="width: 256px; height: 256px;">
+          <img src="../../../img/explains/vertex-trian.gif" alt="Vertex Lines" class="picture" style="width: 256px; height: 256px;">
+          <img src="../../../img/explains/vertex-quad.gif" alt="Vertex Lines" class="picture" style="width: 256px; height: 256px;">
+        </div>
+        
+        <div class="section-important">
+          <img src="../../../img/kurisu.png" alt="Make a point!" class="left-image icon-size">
+          <div class="text-size-def">
+            Yes, I specifically skipped the point primitive, because it will render... points. 
+            This primitive is used in quite rare cases, for example, to display some particles, build dynamic geometry or in point clouds for 3D mapping.
+          </div>
+        </div>
+
+        <p class="text-size-def">
+          Note that if we try to construct a triangle, the <span style="font-weight: bold;">extra vertex will simply be discarded</span>.<br><br>
+          Cool! It would seem that in order to build a square we should use the Quad primitive. But there is a nuance that concerns the GameMaker engine...
+          <span style="font-weight: bold;">It still does not support this type of primitive</span>. *facepalm*
+          <br><br>
+          So what to do now? The solution is very simple - <span class="hg_green">a square can be built from two triangles</span>.
+          We will have two triangles - with vertex indexes <span class="hg_yellow">1, 2, 3</span> and <span class="hg_yellow">1, 3, 4</span>.
+          <br><br>
+          But for this we will have to copy vertices <span class="hg_yellow">1 and 3</span> to the vertex buffer. 
+          So instead of <span style="font-weight: bold;">4 vertices</span> in the buffer we will have <span style="font-weight: bold;">6</span>.<br>
+          The final sequence will be as follows - <span class="hg_yellow">1, 2, 3, 1, 3, 4</span>.      
+        </p>
+
+        <div class="section-important">
+          <img src="../../../img/kurisu.png" alt="Make a point!" class="left-image icon-size">
+          <div class="text-size-def">
+            Someone might ask:<br> <span class="text-code" style="font-weight: bold;">Why did you choose the sequence 1,2,3 and 1,3,4 instead of, for example, 3,1,2 and 4,3,1?</span> 
+            <span class="text-code" style="font-weight: bold;">After all, they also form the same triangles!</span><br>
+            And that's right. However, <span class="hg_green">whether the triangle is formed clockwise or vice versa is very important for optimizing the rendering of 3D models</span>. 
+            I will talk about this in another article, which will be released later.
+          </div>
+        </div>
+
+        <p class="text-size-def">
+          In fact, the triangular primitive is the most common in 3D graphics. From it, you can build an object of almost any complexity.
+          And the difference between 4 and 6 vertices is not great.
+          <br><br>
+          But what if we're going to load an object into the game that has <span style="font-weight: bold;">100,000</span> triangles? 
+          A lot of the vertices will just be repeated, taking up extra GPU memory.
+          For this purpose, an another buffer was invented - the <span class="hg_green">Index Buffer</span>.
+        </p>
+
+        <div class="section-important">
+          <img src="../../../img/mayuri-important.png" alt="Important!" class="left-image icon-size">
+            <div class="text-size-def">
+              <span class="hg_green">Index Buffer</span> is <span class="hg_green">a sequential set of vertex indexes (integers)</span> in the vertex buffer. 
+              If you attach it during rendering, the GPU will sequentially take vertices according to this buffer. 
+              And there is no need for duplication or sequence of vertices in the vertex buffer.
+            </div>
+        </div>
+
+        <p class="text-size-def">
+          This seems to be the solution. But developers on the GameMaker engine are again faced with a problem - 
+          <span style="font-weight: bold;">index buffers are not supported either</span>. *facepalm x2*<br>
+          And unfortunately, this is something you will have to live with (at least for now). 
+          So choose your models wisely, look at how many vertices they contain, and what these vertices store.
+        </p>
+
+      </div>
+      
+      <div class="section-important" style="margin-top: 100px; width: 80%;">
+        <img src="../../../img/serufu-in-progress.webp" alt="In Progress" calss="left-image" style="height: 400px;">
+        <p class="text-code text-size-def">
+          This page is still under development. There will be a continuation here soon.<br><br>
+          Thank you for reading!<br><br>
+          If you liked the article, you can share it and/or write your impressions and wishes to me personally in the 
+          <a id="navlink" href="https://nishort.atabook.org/" target="_blank">guest book</a>.
+          <br><br>
+          @Nick_Nishort
+          <br><br><a id="navlink" href="../../home.html">Go to home page</a>
+        </p>
+      </div>
+
+    </div>
+
+  </body>
+</html>

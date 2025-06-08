@@ -1,0 +1,84 @@
+/*
+  GameMaker Basics - css
+*/
+
+.back {
+  background-color: #10111B;
+  background-image: url("../img/steins0.gif");
+  background-attachment: fixed;
+  background-size: cover;
+  
+
+  -ms-interpolation-mode: nearest-neighbor;
+}
+
+.center {
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.container-solid {
+  background-color: #0c0c18;
+  border-width: 2px;
+  outline: thick double #b7c2ab;
+  border-radius: 8px;
+  padding: 30px;
+}
+
+.text-code {
+  font-family: "Fira Code", monospace;
+  color: #b7c2ab;
+}
+
+.yomogi-regular {
+  font-family: "Yomogi", cursive;
+  font-weight: 400;
+  font-style: normal;
+  color: #b7c2ab;
+}
+
+.text-size-def {
+  font-size: 20px;
+  text-align: justify;
+}
+
+.icon-size {
+  width: 100px;
+  height: 100px;
+}
+
+.subheader {
+  color: #66e1f6;
+  font-size: 40px;
+}
+
+.hg_green {
+  color: #70f57b;
+}
+
+.hg_yellow {
+  color: #f5ef81;
+}
+
+.left-image {
+  float: left;
+  margin: 10px 10px 10px 0;
+}
+
+.section-important {
+  display: flex;
+  align-items: center;
+}
+
+.picture {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#navlink {
+  text-decoration: none;
+  color: #e43800;
+  
+}
