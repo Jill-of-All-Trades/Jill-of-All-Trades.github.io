@@ -18,7 +18,7 @@
 
   <body class="back">
 
-    <div class="container-solid center" style="width: 1000px; height: 4000px; margin-top: 80vh;">
+    <div class="container-solid center" style="width: 1000px; height: 5000px; margin-top: 80vh;">
       <div class="text-code" style="font-size: 30px; text-align: center;">
         ~ The Basics of 3D Games ~
       </div>
@@ -64,7 +64,7 @@
 
         <p class="text-size-def">
           To display any 3D object, all vertices must have at least a position in 3D space - X, Y, and Z coordinates.
-          The X, Y, Z values are represented by floating-point numbers (like <span class="text-code">10,5</span>).<br>
+          The X, Y, Z values are represented by floating-point numbers (like <span class="text-code">10.5</span>).<br>
           For example, let's take <span class="hg_green">four vertices storing coordinates</span> shown in the image below.
           Using them, we will assemble the simplest <span class="hg_green">square</span> (yes, it can also be in 3D, although it's an ordinary plane).
         </p>
@@ -95,6 +95,7 @@
           <img src="../../../img/explains/vertex-quad.gif" alt="Vertex Lines" class="picture" style="width: 256px; height: 256px;">
         </div>
         
+        <br>
         <div class="section-important">
           <img src="../../../img/kurisu.png" alt="Make a point!" class="left-image icon-size">
           <div class="text-size-def">
@@ -145,7 +146,7 @@
         </div>
 
         <p class="text-size-def">
-          This seems to be the solution. But developers on the GameMaker engine are again faced with a problem - 
+          This seems to be the solution. But developers who use GameMaker engine are again faced with a problem - 
           <span style="font-weight: bold;">index buffers are not supported either</span>. *facepalm x2*<br>
           And unfortunately, this is something you will have to live with (at least for now). 
           So choose your models wisely, look at how many vertices they contain, and what these vertices store.
@@ -153,6 +154,61 @@
 
       </div>
       
+      <div id="003" class="yomogi-regular">
+        <p class="subheader">What is 3D World</p>
+
+        <div class="section-important">
+          <img src="../../../img/mayuri-important.png" alt="Important!" class="left-image icon-size">
+            <div class="text-size-def">
+              <span class="hg_green">3D World</span> is <span class="hg_green">a certain space where 3D objects are located</span>. 
+              The <span class="hg_green">vertex coordinates</span> are the position of the vertex 
+              <span class="hg_green">if the entire 3D object were at coordinate X=0, Y=0, Z=0 in the 3D World!</span>
+              The transformation of each object is specified by <span class="hg_yellow">translation, rotation and scaling matrices</span>.
+            </div>
+        </div>
+
+        <p class="text-size-def">
+          Perhaps many people are not familiar with matrices and mathematics in general, 
+          so I will try to explain everything as simply as possible. 
+          For example, to place a 3D object somewhere in 3D space, it must be moved to the desired position. 
+          This is done <span class="hg_green">by shifting the X, Y, Z coordinates of all the vertices of the 3D object</span>.
+          <br><br>
+          In simple terms, it is just a matter of summation.
+          The scaling and rotating operations are a little more complex to calculate, 
+          but can still be reduced to a combination of sequential additions and multiplications of numbers.
+          <br><br>
+          That's why the great mathematicians of the past came up with such a thing as <span class="hg_yellow">matrices</span>. 
+          And to perform any transformation of a coordinate, it is enough to multiply it by the necessary matrix. 
+          Sounds much simpler, doesn't it?
+          <br><br>
+          For those who still have no idea what a <span class="hg_yellow">matrix</span> is, 
+          it is <span class="hg_yellow">a set of numbers arranged in a certain way in a certain container (array)</span>.
+          Yeah, many resources present them as a two-dimensional table with rows and columns, but 
+          <span style="font-weight: bold;">in GameMaker matrices are stored as a one-dimensional array.</span>
+          <br><br>
+          We will talk about what numbers are in matrices and how to create them next time, 
+          since this is a rather broad topic. 
+          And don't worry too much if this seems difficult to you. 
+          In the engine itself, all the matrices are in fact created by calling a very simple single function.
+          <br><br>
+          Great. We have vertices from the <span class="hg_yellow">Vertex Buffer</span>, and <span class="hg_yellow">translation (T), rotation (R) and scaling (S) matrices</span>. 
+          It is clear that we need to multiply. But in what order?
+
+          <div class="section-important">
+          <img src="../../../img/mayuri-important.png" alt="Important!" class="left-image icon-size">
+            <div class="text-size-def">
+              <span class="hg_yellow">New vertex location</span> = 
+              <span class="hg_green">Vertex position</span> * 
+              <span class="hg_yellow">T</span> * 
+              <span class="hg_yellow">R</span> *
+              <span class="hg_yellow">S</span>
+            </div>
+        </div>
+        </p>
+        
+
+      </div>
+
       <div class="section-important" style="margin-top: 100px; width: 80%;">
         <img src="../../../img/serufu-in-progress.webp" alt="In Progress" calss="left-image" style="height: 400px;">
         <p class="text-code text-size-def">
