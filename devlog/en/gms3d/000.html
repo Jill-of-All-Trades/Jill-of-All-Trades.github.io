@@ -18,7 +18,7 @@
 
   <body class="back">
 
-    <div class="container-solid center" style="width: 1000px; height: 5000px; margin-top: 80vh;">
+    <div class="container-solid center" style="width: 1000px; height: 9000px; margin-top: 80vh;">
       <div class="text-code" style="font-size: 30px; text-align: center;">
         ~ The Basics of 3D Games ~
       </div>
@@ -35,6 +35,7 @@
       </div>
       <hr>
 
+      <!-- INTRO -->
       <div id="intro" class="yomogi-regular">
         <p class="subheader">Intro</p>
         <p class="text-size-def">
@@ -48,6 +49,7 @@
         </p>
       </div>
 
+      <!-- What is a 3D object -->
       <div id="001" class="yomogi-regular">
         <p class="subheader">What is a 3D object</p>
 
@@ -73,6 +75,7 @@
 
       </div>
       
+      <!-- How to build 3D objects -->
       <div id="002" class="yomogi-regular">
         <p class="subheader">How to build 3D objects</p>
 
@@ -83,7 +86,7 @@
           Before sending our square to the renderer (GPU), we must tell the computer <span class="hg_green">what primitive it should build</span> - 
           <span class="hg_yellow">points, straight lines, triangles,</span> or <span class="hg_yellow">quads</span>. There are others, but we'll limit ourselves to these for now.
           <br><br>
-          After that, the <span style="font-weight: bold;">GPU will sequentially go through each vertex in the order in which they are in the vertex buffer</span> and build the required primitive.
+          After that, the <span class="hg_aqua">GPU will sequentially go through each vertex in the order in which they are in the vertex buffer</span> and build the required primitive.
           <br><br>
           To better understand what I'm talking about, let's index the vertices in the order in which they would be in the buffer, 
           and see what the result will look like with different primitives.
@@ -91,8 +94,8 @@
         
         <div style="display: flex; justify-content: center; gap: 10px;">
           <img src="../../../img/explains/vertex-lines.gif" alt="Vertex Lines" class="picture" style="width: 256px; height: 256px;">
-          <img src="../../../img/explains/vertex-trian.gif" alt="Vertex Lines" class="picture" style="width: 256px; height: 256px;">
-          <img src="../../../img/explains/vertex-quad.gif" alt="Vertex Lines" class="picture" style="width: 256px; height: 256px;">
+          <img src="../../../img/explains/vertex-trian.gif" alt="Vertex Trian" class="picture" style="width: 256px; height: 256px;">
+          <img src="../../../img/explains/vertex-quad.gif" alt="Vertex Quad" class="picture" style="width: 256px; height: 256px;">
         </div>
         
         <br>
@@ -105,15 +108,15 @@
         </div>
 
         <p class="text-size-def">
-          Note that if we try to construct a triangle, the <span style="font-weight: bold;">extra vertex will simply be discarded</span>.<br><br>
+          Note that if we try to construct a triangle, the <span class="hg_aqua">extra vertex will simply be discarded</span>.<br><br>
           Cool! It would seem that in order to build a square we should use the Quad primitive. But there is a nuance that concerns the GameMaker engine...
-          <span style="font-weight: bold;">It still does not support this type of primitive</span>. *facepalm*
+          <span  class="hg_aqua">It still does not support this type of primitive</span>. *facepalm*
           <br><br>
           So what to do now? The solution is very simple - <span class="hg_green">a square can be built from two triangles</span>.
           We will have two triangles - with vertex indexes <span class="hg_yellow">1, 2, 3</span> and <span class="hg_yellow">1, 3, 4</span>.
           <br><br>
           But for this we will have to copy vertices <span class="hg_yellow">1 and 3</span> to the vertex buffer. 
-          So instead of <span style="font-weight: bold;">4 vertices</span> in the buffer we will have <span style="font-weight: bold;">6</span>.<br>
+          So instead of <span  class="hg_aqua">4 vertices</span> in the buffer we will have <span class="hg_aqua">6</span>.<br>
           The final sequence will be as follows - <span class="hg_yellow">1, 2, 3, 1, 3, 4</span>.      
         </p>
 
@@ -131,7 +134,7 @@
           In fact, the triangular primitive is the most common in 3D graphics. From it, you can build an object of almost any complexity.
           And the difference between 4 and 6 vertices is not great.
           <br><br>
-          But what if we're going to load an object into the game that has <span style="font-weight: bold;">100,000</span> triangles? 
+          But what if we're going to load an object into the game that has <span  class="hg_aqua">100,000</span> triangles? 
           A lot of the vertices will just be repeated, taking up extra GPU memory.
           For this purpose, an another buffer was invented - the <span class="hg_green">Index Buffer</span>.
         </p>
@@ -147,15 +150,18 @@
 
         <p class="text-size-def">
           This seems to be the solution. But developers who use GameMaker engine are again faced with a problem - 
-          <span style="font-weight: bold;">index buffers are not supported either</span>. *facepalm x2*<br>
+          <span  class="hg_aqua">index buffers are not supported either</span>. *facepalm x2*<br>
           And unfortunately, this is something you will have to live with (at least for now). 
           So choose your models wisely, look at how many vertices they contain, and what these vertices store.
         </p>
 
       </div>
       
+      <!-- What is 3D World -->
       <div id="003" class="yomogi-regular">
         <p class="subheader">What is 3D World</p>
+
+        <img src="../../../img/explains/world-explain.gif" alt="World explain 1" class="picture" style="width: 256px; height: 256px;">
 
         <div class="section-important">
           <img src="../../../img/mayuri-important.png" alt="Important!" class="left-image icon-size">
@@ -178,13 +184,13 @@
           but can still be reduced to a combination of sequential additions and multiplications of numbers.
           <br><br>
           That's why the great mathematicians of the past came up with such a thing as <span class="hg_yellow">matrices</span>. 
-          And to perform any transformation of a coordinate, it is enough to multiply it by the necessary matrix. 
+          And to <span class="hg_green">perform any transformation of a coordinate, it is enough to multiply it by the necessary matrix.</span> 
           Sounds much simpler, doesn't it?
           <br><br>
           For those who still have no idea what a <span class="hg_yellow">matrix</span> is, 
           it is <span class="hg_yellow">a set of numbers arranged in a certain way in a certain container (array)</span>.
           Yeah, many resources present them as a two-dimensional table with rows and columns, but 
-          <span style="font-weight: bold;">in GameMaker matrices are stored as a one-dimensional array.</span>
+          <span  class="hg_aqua">in GameMaker matrices are stored as a one-dimensional array.</span>
           <br><br>
           We will talk about what numbers are in matrices and how to create them next time, 
           since this is a rather broad topic. 
@@ -193,26 +199,175 @@
           <br><br>
           Great. We have vertices from the <span class="hg_yellow">Vertex Buffer</span>, and <span class="hg_yellow">translation (T), rotation (R) and scaling (S) matrices</span>. 
           It is clear that we need to multiply. But in what order?
+          <br><br>
+          Any combination of the order <span class="hg_yellow">S * R * T</span> gives a valid transformation matrix. 
+          However, it is pretty common <span  class="hg_aqua">to first scale the object, then rotate it, then translate it</span>.
+          Matrix multiplication is written <span class="hg_green">right-to-left</span>, so we will have the following formula:
+        </p>
 
-          <div class="section-important">
+        <div class="section-important">
           <img src="../../../img/mayuri-important.png" alt="Important!" class="left-image icon-size">
-            <div class="text-size-def">
-              <span class="hg_yellow">New vertex location</span> = 
-              <span class="hg_green">Vertex position</span> * 
-              <span class="hg_yellow">T</span> * 
-              <span class="hg_yellow">R</span> *
-              <span class="hg_yellow">S</span>
-            </div>
+          <div class="text-size-def">
+            <span class="hg_yellow">New vertex location</span> = 
+            <span class="hg_yellow">T</span> * 
+            <span class="hg_yellow">R</span> *
+            <span class="hg_yellow">S</span> *
+            <span class="hg_green">Vertex position</span>
+          </div>
         </div>
+        
+        <p class="text-size-def">
+          If you do not do it in that order, then a non-uniform scaling will be affected by the previous rotation, 
+          making your object <span class="hg_aqua">look skewed</span>. And the rotation will be affected by the translation, 
+          making the final position of your object very different from 
+          what the value of the translation would make you expect.
         </p>
         
+      </div>
+
+      <!-- What is 3D Camera -->
+      <div id="004" class="yomogi-regular">
+        <p class="subheader">What is 3D Camera</p>
+
+        <p class="text-size-def">
+          Now we have a concept of what 3D Objects are and 
+          how they will be located in the 3D World of your future super-cool game.
+          But to see our objects and our world, we need an <span class="hg_green">Observer</span>. 
+          In videogames, the <span class="hg_green">Camera</span> plays that role. 
+          It's usually placed inside or near the game character's head, so it feels like we are playing him.
+          But what is a camera from a developer's point of view?           
+        </p>
+
+        <div class="section-important">
+          <img src="../../../img/mayuri-important.png" alt="Important!" class="left-image icon-size">
+            <div class="text-size-def">
+              <span class="hg_green">3D Camera</span> is a combination of two matrices - 
+              <span class="hg_yellow">View matrix</span> and <span class="hg_aqua">Projection matrix</span>.<br>
+              The <span class="hg_yellow">View matrix</span> determines a <span class="hg_green">position of the observer</span> 
+              and <span class="hg_green">where it is looking</span>.<br>
+              The <span class="hg_aqua">Projection matrix</span> determines <span class="hg_green">how the world that the observer sees will be displayed</span>.
+            </div>
+        </div>
+
+        <p class="text-size-def">
+          To create a <span class="hg_yellow">View Matrix</span>, we need to know the following:
+        </p>
+
+        <ul class="text-size-def">
+          <li>Observer position (X,Y,Z)</li>
+          <li>Look direction (a.k.a. Forward vector, Fx, Fy, Fz)</li>
+          <li>Camera up direction (a.k.a. Up vector, Ux, Uy, Uz)</li>
+        </ul>
+
+        <p class="text-size-def">
+          The <span class="hg_green">Up vector</span> is needed so that our image of the world is not being upside down. 
+          Usually this vector is directed straight into the sky of our game world.
+          <br><br>
+          To create a <span class="hg_aqua">Projection matrix</span>, we need to know the following:
+        </p>
+
+        <ul class="text-size-def">
+          <li>Width of projection</li>
+          <li>Height of projection</li>
+          <li>Distance to Near Clip plane</li>
+          <li>Distance to Far Clip plane</li>
+          <li>Field of View angle (a.k.a. FOV, *only for perspective projection, read below)</li>
+        </ul>
+
+        <p class="text-size-def">
+          The projection <span class="hg_green">Width and Height</span> are usually equal to the dimensions of the game window/screen.
+          <br><br>
+          The <span class="hg_yellow">Near and Far Clipping Distances</span> are distances between the
+          <span class="hg_aqua">camera position</span> and
+          <span class="hg_aqua">imaginary planes that perpendicular to the Forward (look) vector</span> of the camera.
+          Anything closer to the camera than the near clipping distance isn't displayed (it's too close), 
+          and anything further away from the camera than the far clipping distance isn't displayed either (it's too far away).
+          <br><br>
+          There are two types of projections: <span class="hg_green">orthographic</span> and <span class="hg_yellow">perspective</span>.
+        </p>
+
+        <div style="display: flex; justify-content: center; gap: 10px;">
+          <p>
+            <img src="../../../img/explains/ortho-example.gif" alt="Ortho Projection" class="picture" style="width: 450px; height: 256px;">
+            Orthographic projection (from Disgaea 2)
+          </p>
+          <p>
+            <img src="../../../img/explains/persp-example.gif" alt="Perspective Projection" class="picture" style="width: 450px; height: 256px;">
+            Perspective projection (from Anno: Mutationem)
+          </p>
+        </div>
+
+        <p class="text-size-def">
+          In <span class="hg_green">Orthographic projection</span> there is no visible depth effect: 
+          all objects appear as if they are at the same distance from the camera.<br>
+          In <span class="hg_yellow">Perspective projection</span> the size of objects depends on the distance to the camera: the further away, the smaller they are.
+          This projection is similar to our vision, or the lens of a real camera.
+          <br><br>
+          Also for perspective projection the angle of view is important. The larger it is, the more objects will fit into the camera view. 
+          For this purpose, games often use the so-called FOV.
+        </p>
+
+        <img src="../../../img/explains/perspective-explain.gif" alt="Perspective explain" class="picture" style="width: 256; height: 256px;">
+        <br>
+
+        <div class="section-important">
+          <img src="../../../img/kurisu.png" alt="Make a point!" class="left-image icon-size">
+          <div class="text-size-def">
+            In general, the Near and Far Clipping Distances are enough to define the perspective projection matrix, 
+            but it is much more convenient to define it through the FOV angle and the <span class="hg_green">aspect ratio</span> of these planes
+            (e.g. <span class="hg_green">Far Distance / Near Distance</span>).
+          </div>
+        </div>
 
       </div>
 
-      <div class="section-important" style="margin-top: 100px; width: 80%;">
+      <!-- Render 3D World on 2D screen using Shaders -->
+      <div id="005" class="yomogi-regular">
+        <p class="subheader">Render 3D World on 2D screen using Shaders</p>
+
+        <p class="text-size-def">
+          Shaders. For me, and probably for many others, the mere mention of them made me break out in a cold sweat. 
+          That's why people came up with a technology called Shader Graph, but alas, Gamemaker doesn't have it.
+          <br><br>
+          From my experience, I can say that <span class="hg_aqua">you can only learn to write shaders in practice</span>. Which we will do in the next article.
+          So now I'll briefly explain how shaders connect our game world and the actual game window that the user will see.
+        </p>
+
+        <div class="section-important">
+          <img src="../../../img/mayuri-important.png" alt="Important!" class="left-image icon-size">
+            <div class="text-size-def">
+              <span class="hg_green">Shaders</span> are <span class="hg_green">programs running on the GPU</span> 
+              to which we pass data of our <span class="hg_green">3D objects</span> and the <span class="hg_green">Camera</span>, 
+              resulting in a <span class="hg_yellow">2D image</span> that is saved to the <span class="hg_yellow">framebuffer</span>.<br>
+              The <span class="hg_yellow">framebuffer</span> is the <span class="hg_green">frame that will be displayed on the player's screen</span>.
+            </div>
+        </div>
+
+      </div>
+
+      <!-- Conclusion -->
+      <div id="006" class="yomogi-regular">
+        <p class="subheader">Conclusion</p>
+
+        <img src="../../../img/lucky-star-anime.gif" alt="Perspective explain" class="picture" style="width: 256; height: 256px;">
+
+        <p class="text-size-def">
+          In this article I went over the <span class="hg_green">basic theory of creating 3D games</span>, 
+          sometimes touching on the features of the <span class="hg_aqua">GameMaker engine</span>.
+          <br><br> 
+          In the <span class="hg_aqua">next article</span>, I will explain the practical part -  
+          <span class="hg_yellow">I will show how to implement our first 3D game, with code examples</span>.
+          <br><br>
+        </p>
+      </div>
+
+      <!-- Todo -->
+      <div class="section-important" style="margin-top: 100px; width: 98%;">
         <img src="../../../img/serufu-in-progress.webp" alt="In Progress" calss="left-image" style="height: 400px;">
-        <p class="text-code text-size-def">
+        <p class="text-code text-size-def" style="padding-right: 30px;">
+          <!--
           This page is still under development. There will be a continuation here soon.<br><br>
+          -->
           Thank you for reading!<br><br>
           If you liked the article, you can share it and/or write your impressions and wishes to me personally in the 
           <a id="navlink" href="https://nishort.atabook.org/" target="_blank">guest book</a>.

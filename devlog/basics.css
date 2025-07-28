@@ -61,6 +61,11 @@
   color: #f5ef81;
 }
 
+.hg_aqua {
+  color: #71ebf4;
+  font-weight: bold;
+}
+
 .left-image {
   float: left;
   margin: 10px 10px 10px 0;
@@ -72,6 +77,7 @@
 
   background-color: #1d1d39;
   border-radius: 8px;
+  padding: 10px;
 }
 
 .picture {
