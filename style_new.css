@@ -202,10 +202,37 @@
     background: #6A2443;
     border-radius: 3px;
     transition: transform .2s;
+    display: flex;
+    flex-direction: column;
   }
   
   .gamecard:hover {
    transform: scale(1.1); 
+  }
+
+  .gamecard .text {
+    display: flex; 
+    flex: 1;
+    align-items: center;
+    margin: 2px;
+  }
+
+  .gamecard img {
+    border-radius: .2em;
+    border: 3px solid #3e1627;
+  }
+
+  .gamecard p {
+    color: white;
+    text-shadow:  0.09em 0.09em 0 #08081c;
+    /* Rampart one*/
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 1000;
+    font-style: normal;
+    font-size: 1.2rem;
+    margin: 2px;
+    flex: 1;
   }
   
   .gameline {
