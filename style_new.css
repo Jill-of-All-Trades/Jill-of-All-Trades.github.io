@@ -253,13 +253,13 @@
    transform: scale(1.1); 
   }
   
-  .outline-dark {
-    text-shadow: 
-      -2px -2px 0 #08081c,  
-      2px -2px 0 #08081c,
-      -2px  2px 0 #08081c,
-      2px  2px 0 #08081c;
-  }
+   .outline-dark { 
+     text-shadow: 
+       -2px -2px 0 #08081c,  
+       2px -2px 0 #08081c, 
+       -2px  2px 0 #08081c, 
+       2px  2px 0 #08081c; 
+   } 
   
   /* Clear floats after the columns */
   .pagewrapper:after {
