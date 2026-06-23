@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="img/favicon.ico">
+
+    <link href="../../basics.css" rel="stylesheet"/>
+
+    <title> GameMaker and 3D Games - First steps</title>
+
+    <!-- Fira Code -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@300..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Yomogi&display=swap" rel="stylesheet">
+
+    <link href="../../prism.css" rel="stylesheet" />
+  </head>
+
+  <body class="back">
+
+    <div class="container-solid center" style="width: 1000px; height: 16400px; margin-top: 80vh;">
+      <div class="text-code" style="font-size: 30px; text-align: center;">
+        ~ 3D Games - First steps ~
+      </div>
+      <hr>
+
+      <div id="article-content" class="yomogi-regular text-size-def" >
+        <p><a id="navlink" href="#intro">* Intro</a></p>
+        <p><a id="navlink" href="#initial-setup">* Initial Setup</a></p>
+        <p><a id="navlink" href="#create-3d-cube">* Creating 3D Cube</a></p>
+        <p><a id="navlink" href="#textures">* Textures, UVs and Sprites</a></p>
+        <p><a id="navlink" href="#shaders">* Writing Shaders</a></p>
+        <p><a id="navlink" href="#objects">* Objects, Instances & Rooms</a></p>
+        <p><a id="navlink" href="#play">* Play it!</a></p>
+        <p><a id="navlink" href="#conclusion">* Conclusion</a></p>
+      </div>
+      <hr>
+
+      <!-- INTRO -->
+      <div id="intro" class="yomogi-regular">
+        <p class="subheader">Intro</p>
+        <p class="text-size-def">
+          In <a id="navlink" href="000.html" >previous article</a>, we had learned about basic concepts of creating 3D games in GameMaker. 
+          In this article we will create a new game project and write a simple app with 3D cube on the scene.
+        </p>
+      </div>
+
+      <!-- INITIAL SETUP -->
+      <div id="initial-setup" class="yomogi-regular">
+        <p class="subheader">Initial Setup</p>
+        <p class="text-size-def">
+          First, you'll need to install <span class="hg_green">GameMaker Engine</span>. Please note that it's free for personal use.
+          The easiest way is to download it from <a id="navlink" href="https://store.steampowered.com/app/1670460/GameMaker/" >official Steam Page</a>.
+          <br><br>
+          After installation, launch the app. You may need to log in. 
+          Then simply create an empty (blank game) project and proceed to the next step.
+        </p>
+
+        <div class="section-important">
+          <img src="../../../img/kurisu.png" alt="Make a point!" class="left-image icon-size">
+          <div class="text-size-def">
+            I didn't make a detailed description of the installation and project creation process, as this could all change over time. 
+            I'm confident you'll be able to handle this trivial task without any problems~
+          </div>
+        </div>
+
+        <p class="text-size-def">
+          Open your newly created blank project. You'll see the <span class="hg_aqua">Asset Browser</span> on the right. 
+          If it's not visible by any reason, click <span class="hg_green">Windows -> Asset Browser</span> in the top left menu bar.
+          <br><br>
+          Let's create our first script, where we'll write the code. To do this, <span class="hg_green">Mouse right-click -> Create -> Script</span>.
+        </p>
+
+        <img src="../../../img/screenshots/001/asset-browser.png" alt="asset browser" class="picture" style="width: 256px; height: 512px;">
+
+        <p class="text-size-def">
+          You'll be prompted to select your preferred scripting style. Select <span class="hg_yellow">GML Code</span> and click OK.
+        </p>
+
+        <img src="../../../img/screenshots/001/code-style.png" alt="asset browser" class="picture" style="width: 512px; height: 512px;">
+
+        <p class="text-size-def">
+          A <span class="hg_aqua">Script Editor</span> window titled like "Script1" will open, along with an empty function with the same name. You can rename script by pressing <span class="hg_aqua">F2</span>.
+          Let's call it <span class="hg_yellow">script_3d</span> and remove all the auto-generated code from the script (e.g. empty function).
+        </p>
+
+        <div class="section-important">
+          <img src="../../../img/mayuri-important.png" alt="Important!" class="left-image icon-size">
+            <div class="text-size-def">
+              <span class="hg_green">Scripts</span> are essentially a collection of one or more user-defined <span class="hg_green">functions or variables</span> that you write yourself as snippets of code.
+              They are parsed on a <span class="text-code" style="font-weight: bold;">global</span> level and will be <span class="text-code" style="font-weight: bold;">compiled at the very start of the game</span>.
+              Any variables declared outside of a function in the script will be considered <span class="hg_green">Global Variables</span>. Global scope functions and variables can be accessed by all.
+              <br><br>
+              You can read more about scripts at the <a id="navlink" href="https://manual.gamemaker.io/monthly/en/GameMaker_Language/GML_Overview/Script_Functions.htm">manual</a>. 
+        </div>
+
+      </div>
+
+      <!-- 3D Cube -->
+      <div id="create-3d-cube" class="yomogi-regular">
+        <p class="subheader">Creating 3D Cube</p>
+
+        <p class="text-size-def">
+          Any 3D object consists of vertices, and each vertex contains specific information (for example, its position) that must conform to a specific <span class="hg_aqua">format</span>.
+          Let's create the simplest format that will contain the <span class="hg_aqua">3D position</span> and <span class="hg_aqua">texture coordinates (UVs)</span> of the object.
+        </p>
+
+<pre><code class="language-gml">vertex_format_begin();
+vertex_format_add_position_3d();
+vertex_format_add_texcoord();
+global.format3D = vertex_format_end();</code></pre>
+
+        <p class="text-size-def">
+          Next, we need to be able to create the cube model itself. This will be a simple <span class="hg_aqua">1x1x1 dimension cube at (0,0,0) coordinate</span> with the <span class="hg_aqua">same texture on all faces</span>.
+          Essentially, the cube has <span class="hg_green">6 square (quad) faces</span>. But since the engine can't render quads yet, we'll use triangles instead. So, it's <span class="hg_green">6 x 2 = 12 triangles</span>.
+          <br>
+          In the same script in which we created the format, below we will write a function that will generate a buffer with vertices for our cube model:
+        </p>
+
+<pre><code class="language-gml">/// @return {Id.VertexBuffer}
+function create_cube() {
+  var _vbuff = vertex_create_buffer();
+
+  vertex_begin(_vbuff, global.format3D);
+    // ================== TOP (Z = -0.5) ==================
+    vertex_position_3d(_vbuff, -0.5,  0.5, -0.5);   vertex_texcoord(_vbuff, 0, 1); 
+    vertex_position_3d(_vbuff,  0.5, -0.5, -0.5);   vertex_texcoord(_vbuff, 1, 0);
+    vertex_position_3d(_vbuff, -0.5, -0.5, -0.5);   vertex_texcoord(_vbuff, 0, 0); 
+
+    vertex_position_3d(_vbuff, -0.5,  0.5, -0.5);   vertex_texcoord(_vbuff, 0, 1); 
+    vertex_position_3d(_vbuff,  0.5,  0.5, -0.5);   vertex_texcoord(_vbuff, 1, 1); 
+    vertex_position_3d(_vbuff,  0.5, -0.5, -0.5);   vertex_texcoord(_vbuff, 1, 0); 
+
+    // ================== BOTTOM (Z = 0.5) ==================
+    vertex_position_3d(_vbuff,  0.5, -0.5,  0.5);   vertex_texcoord(_vbuff, 0, 0);
+    vertex_position_3d(_vbuff, -0.5,  0.5,  0.5);   vertex_texcoord(_vbuff, 1, 1);
+    vertex_position_3d(_vbuff, -0.5, -0.5,  0.5);   vertex_texcoord(_vbuff, 1, 0);
+
+    vertex_position_3d(_vbuff,  0.5, -0.5,  0.5);   vertex_texcoord(_vbuff, 0, 0);
+    vertex_position_3d(_vbuff,  0.5,  0.5,  0.5);   vertex_texcoord(_vbuff, 0, 1);
+    vertex_position_3d(_vbuff, -0.5,  0.5,  0.5);   vertex_texcoord(_vbuff, 1, 1);
+
+    // ================== LEFT (X = -0.5) ==================
+    vertex_position_3d(_vbuff, -0.5, -0.5, -0.5);   vertex_texcoord(_vbuff, 0, 0);
+    vertex_position_3d(_vbuff, -0.5, -0.5,  0.5);   vertex_texcoord(_vbuff, 0, 1);
+    vertex_position_3d(_vbuff, -0.5,  0.5,  0.5);   vertex_texcoord(_vbuff, 1, 1);
+
+    vertex_position_3d(_vbuff, -0.5, -0.5, -0.5);   vertex_texcoord(_vbuff, 0, 0);
+    vertex_position_3d(_vbuff, -0.5,  0.5,  0.5);   vertex_texcoord(_vbuff, 1, 1);
+    vertex_position_3d(_vbuff, -0.5,  0.5, -0.5);   vertex_texcoord(_vbuff, 1, 0);
+
+    // ================== RIGHT (X = 0.5) ==================
+    vertex_position_3d(_vbuff,  0.5,  0.5, -0.5);   vertex_texcoord(_vbuff, 0, 0);
+    vertex_position_3d(_vbuff,  0.5,  0.5,  0.5);   vertex_texcoord(_vbuff, 0, 1);
+    vertex_position_3d(_vbuff,  0.5, -0.5,  0.5);   vertex_texcoord(_vbuff, 1, 1);
+
+    vertex_position_3d(_vbuff,  0.5,  0.5, -0.5);   vertex_texcoord(_vbuff, 0, 0);
+    vertex_position_3d(_vbuff,  0.5, -0.5,  0.5);   vertex_texcoord(_vbuff, 1, 1);
+    vertex_position_3d(_vbuff,  0.5, -0.5, -0.5);   vertex_texcoord(_vbuff, 1, 0);
+
+    // ================== BACK (Y = -0.5) ==================
+    vertex_position_3d(_vbuff,  0.5, -0.5, -0.5);   vertex_texcoord(_vbuff, 0, 0);
+    vertex_position_3d(_vbuff,  0.5, -0.5,  0.5);   vertex_texcoord(_vbuff, 0, 1);
+    vertex_position_3d(_vbuff, -0.5, -0.5,  0.5);   vertex_texcoord(_vbuff, 1, 1);
+
+    vertex_position_3d(_vbuff,  0.5, -0.5, -0.5);   vertex_texcoord(_vbuff, 0, 0);
+    vertex_position_3d(_vbuff, -0.5, -0.5,  0.5);   vertex_texcoord(_vbuff, 1, 1);
+    vertex_position_3d(_vbuff, -0.5, -0.5, -0.5);   vertex_texcoord(_vbuff, 1, 0);
+
+    // ================== FRONT (Y = 0.5) ==================
+    vertex_position_3d(_vbuff, -0.5,  0.5, -0.5);   vertex_texcoord(_vbuff, 0, 0);
+    vertex_position_3d(_vbuff, -0.5,  0.5,  0.5);   vertex_texcoord(_vbuff, 0, 1);
+    vertex_position_3d(_vbuff,  0.5,  0.5,  0.5);   vertex_texcoord(_vbuff, 1, 1);
+
+    vertex_position_3d(_vbuff, -0.5,  0.5, -0.5);   vertex_texcoord(_vbuff, 0, 0);
+    vertex_position_3d(_vbuff,  0.5,  0.5,  0.5);   vertex_texcoord(_vbuff, 1, 1);
+    vertex_position_3d(_vbuff,  0.5,  0.5, -0.5);   vertex_texcoord(_vbuff, 1, 0);
+  vertex_end(_vbuff);
+
+  return _vbuff;
+}</code></pre>
+
+        <br>  
+        <div class="section-important">
+          <img src="../../../img/kurisu.png" alt="Make a point!" class="left-image icon-size">
+          <div class="text-size-def">
+            This amount of code can be daunting. After all, it's just a simple cube - how much code would it take to create a high-poly model? 
+            That's why people invented <span class="hg_aqua">3D modeling software</span> like Blender, Maya3D, and others to simplify model creation. In future tutorials, we'll cover the system for loading 3D model files. 
+            <span class="text-code" style="font-weight: bold;">But for now, just copy the script and move on to the next step.</span>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- TEXTURES -->
+      <div id="textures" class="yomogi-regular">
+        <p class="subheader">Textures, UVs and Sprites</p>
+        <p class="text-size-def">
+          This section will discuss how our cube will look. Specifically, how the Image is overlaid onto the Cube Model.
+        </p>
+
+        <div class="section-important">
+          <img src="../../../img/mayuri-important.png" alt="Important!" class="left-image icon-size">
+            <div class="text-size-def">
+              <span class="hg_green">Texture</span> is an <span class="hg_green">image</span>. 
+              <span class="hg_aqua">Texel</span> is a <span class="hg_aqua">relative unit of texture size</span> equal to <span class="text-code" style="font-weight: bold;">u = 1/width</span> and <span class="text-code" style="font-weight: bold;">v = 1/height</span> of the texture.
+              Therefore, <span class="hg_aqua">texture coordinates (UV)</span> are in the <span class="text-code" style="font-weight: bold;">range from 0 to 1</span>.
+              <br>
+              <span class="hg_green">Sprite</span> is a structure that contains information about visual representation of the object - used Texture, UVs, animation speed ect.
+            </div>
+        </div>
+
+        <img src="../../../img/explains/uvs.png" alt="UVs example" class="picture" style="width: 512px; height: 512px;">
+
+        <p class="text-size-def">
+          In this example we'll use the approach of <span class="hg_aqua">placing only one sprite per texture</span>. 
+          In 2D games, it's common to place multiple sprites on the same texture. This is called a <span class="hg_aqua">Texture Atlas</span>.
+          <br><br>
+          You can create a sprite in the same way as a script: right-click in the asset browser window, and then select <span class="hg_green">Sprite</span>.
+          <span class="hg_aqua">Create one sprite</span> for our cube, you can call it <span class="hg_aqua">spr_cube</span>.
+          <br><br>
+          Next, <span class="hg_green">download the image below</span>. We'll use it to check that the texture is correctly applied to the cube.
+        </p>
+
+        <img src="../../../img/explains/uv-check.png" alt="UVs check texture" class="picture" style="width: 512px; height: 512px;">
+
+        <p class="text-size-def">
+          <span class="hg_green">Import the image into the sprite</span>. You'll be informed that this action is undoable; just click OK.
+          <span class="hg_yellow">Important: check the box next to "Separate Texture Page".</span> This is necessary so that all sprites are located on separate textures, not on a single one.
+        </p>
+
+        <img src="../../../img/screenshots/001/sprite-import.png" alt="Sprite Import" class="picture" style="width: 556px; height: 347px;">
+
+      </div>
+
+      <!-- SHADERS -->
+      <div id="shaders" class="yomogi-regular">
+        <p class="subheader">Writing shaders</p>
+        <p class="text-size-def">
+          We already know what a Shader is. But shader execution is a pipeline process, consisting of several sequential programs. 
+          In GameMaker, you have two main types of shaders available:
+        </p>
+
+        <div class="section-important">
+          <img src="../../../img/mayuri-important.png" alt="Important!" class="left-image icon-size">
+            <div class="text-size-def">
+              <span class="hg_green">Vertex shader</span> is a <span class="hg_green">program that operates on vertices</span>. 
+              It is <span class="hg_yellow">executed for each vertex</span> of the model. The data from Vertex Buffer is passed and stored in <span class="hg_green">Attribute Variables</span>,
+              and can be accessed directly only in this shader. 
+              The main purpose of this shader is to transform the vertex position from the 3D world to screen space.
+              <br><br>
+              <span class="hg_green">Fragment shader</span> is a <span class="hg_green">program that operates on rasterized pixels</span>. It is <span class="hg_yellow">executed for each pixel</span>. 
+              This shader is responsible for the final rendering of an object - texture, color, transparency, etc.
+            </div>
+        </div>
+
+        <p class="text-size-def">
+          Great, now let's write the simplest shaders - it will just apply the texture on the model. 
+          <span class="hg_green">Create a new shader</span> in the asset browser and name it <span class="hg_aqua">shd_3d</span>. 
+          A window will open with two tabs containing the vertex and fragment shader code. 
+          Remove all the auto-generated code and write the following:
+        </p>
+
+<pre><code class="language-gml">// Vertex shader (shd_3d.vsh)
+attribute vec3 in_Position;      // (x,y,z)
+attribute vec2 in_TextureCoord;  // (u,v)
+
+varying vec2 v_vTexcoord;
+
+void main()
+{
+    vec4 object_space_pos = vec4( in_Position, 1.0 );
+    gl_Position = gm_Matrices[MATRIX_WORLD_VIEW_PROJECTION] * object_space_pos;
+    
+    v_vTexcoord = in_TextureCoord;
+}</code></pre>
+
+        <p class="text-size-def">
+          <span class="hg_yellow">in_Position</span> and <span class="hg_yellow">in_TextureCoord</span> are standart built-in names for shader attributes. Because our defined 3D format has only 3D position and texture coordinates,
+          we use only them. 
+        </p>
+
+        <div class="section-important">
+          <img src="../../../img/mayuri-important.png" alt="Important!" class="left-image icon-size">
+            <div class="text-size-def">
+              <span class="hg_green">Varying</span> - is <span class="hg_green">variable modifier that allow to pass this variable to the fragment shader</span>. 
+              <span class="hg_yellow">Important thing</span> - the <span class="hg_yellow">value</span> in the fragment shader <span class="hg_yellow">will be interpolated
+              between other vertices of rendering element</span> (e.g. triangle). 
+              For every single pixel, the GPU calculates its exact distance from each vertex. It then blends the vertex values proportionally based on this distance.
+            </div>
+        </div>
+
+        <p class="text-size-def">
+          <span class="hg_green">gm_Matrices</span> - is a built-in array that contain various matrices. <span class="hg_yellow">MATRIX_WORLD_VIEW_PROJECTION</span> is self-explanatory name.
+          This matrix stores the result of World (aka Model), View and Projection matrices multiplication, and is needed to
+          translate 3D vertex positions to 2D screen.
+          <br><br>
+          <span class="hg_green">gl_Position</span> is a built-in output variable in the vertex shader that defines the final, 
+          processed 4D vector position (x, y, z, w) of a vertex in <span class="hg_aqua">Normalized Device Coordinates (NDC)</span> space.
+          Once assigned, GameMaker translates gl_Position behind the scenes into a <span class="hg_yellow">range between -1.0 and 1.0</span> for the X and Y axes. 
+          Anything outputting <span class="hg_yellow">outside this range is clipped</span> and will not render on screen.
+        </p>
+
+<pre><code class="language-gml">// Fragment shader (shd_3d.fsh)
+varying vec2 v_vTexcoord;
+
+void main()
+{
+    gl_FragColor = texture2D( gm_BaseTexture, v_vTexcoord );
+}</code></pre>
+
+        <p class="text-size-def">
+          <span class="hg_green">gm_BaseTexture</span> - is a built-in <span class="hg_green">2D sampler</span> (a variable that stores texture reference). 
+          When you call any <span class="text-code" style="font-weight: bold;">draw_*()</span> function - for example, draw_sprite() - or
+          <span class="text-code" style="font-weight: bold;">vertex_submit()</span> function, 
+          it <span class="hg_green">binds passed sprite/texture argument value to this sampler</span>, 
+          so you can access it in the shader.
+          <br><br>
+          <span class="hg_green">texture2D</span> - this function calculates a color value of pixel on the texture using provided UV coordinates.
+          <br><br>
+          <span class="hg_green">gl_FragColor</span> - is a built-in output variable in the fragment shader that defines the final color (r,g,b,a) of the pixel. 
+          Note that the <span class="hg_yellow">color components are stored in range from 0 to 1</span>.
+          
+        </p>
+
+      </div>
+
+      <!-- Objects, Instances & Rooms -->
+      <div id="objects" class="yomogi-regular">
+        <p class="subheader">Objects, Instances & Rooms</p>
+        <p class="text-size-def">
+          Before we continue, we need to become familiar with vital game concepts: Objects, Instances and Rooms.
+        </p>
+
+        <div class="section-important">
+          <img src="../../../img/mayuri-important.png" alt="Important!" class="left-image icon-size">
+            <div class="text-size-def">
+              <span class="hg_green">Object</span> - is <span class="hg_green">a template</span> of resource that has <span class="hg_green">Variables and Events</span>, can run code and control some aspects of the game. 
+              For example: player, camera, UI menu - all of these can be game objects.
+              <br>
+              <span class="hg_green">Instances</span> are <span class="hg_green">in-game copy of the object</span>, that has <span class="hg_yellow">unique id</span> and own variables, but shares all the code.
+              For example: there may be 2 or more players in the game, or several 3D cubes on the scene.
+              <br>
+              <span class="hg_yellow">Room</span> is a <span class="hg_yellow">game scene</span> - it contains many <span class="hg_green">layers with instances</span>. 
+            </div>
+        </div>
+
+        <p class="text-size-def">
+          <span class="hg_yellow">Let's create three Objects</span> (also in Asset Browser): <span class="hg_aqua">obj_cube</span>, <span class="hg_aqua">obj_camera</span> and <span class="hg_aqua">obj_renderer</span>.
+          . Second object will be a camera, so we can see the game world. And the last one is a system object which will control
+          the render pipeline. 
+          <br><br>
+          <span class="hg_aqua">obj_cube</span> - is our 3D cube model representation. 
+          It will:
+        </p>
+
+        <ul class="text-size-def">
+          <li>Create and <span class="hg_yellow">maintain vertex buffer</span> of the 3D model (cube);</li>
+          <li>Store the <span class="hg_green">Position, Rotation and Scale</span> of the model;</li>
+          <li><span class="hg_aqua">Render the cube</span> - translate, rotate and scale it, and then send the vertex data to GPU.</li>
+        </ul>
+
+        <p class="text-size-def">
+          Before continue, we need to set the Sprite - <span class="hg_aqua">spr_cube</span>. 
+          You can select it in Object Editor, or assign the value to <span class="hg_green">sprite_index</span> in the code. <br>
+          Okay, for this object we need to create these events:
+        </p>
+
+<pre><code class="language-gml">/// @desc obj_cube - Create Event
+// This code will be executed once when instance created
+x = 0;
+y = 0;
+z = 0;
+xrot = 0;
+yrot = 0;
+zrot = 0;
+xscale = 8;
+yscale = 8;
+zscale = 8;
+
+vbuff = create_cube();
+
+Render = function() {
+  // Transform the cube - translate, rotate and scale
+  var _matWorld = matrix_build(x, y, z, xrot, yrot, zrot, xscale, yscale, zscale);
+  matrix_set(matrix_world, _matWorld);
+
+  var _texture = sprite_get_texture(sprite_index, image_index);
+  vertex_submit(vbuff, pr_trianglelist, _texture);
+
+  // Restore the matrix
+  matrix_set(matrix_world, matrix_build_identity());
+}</code></pre>
+
+<pre><code class="language-gml">/// @desc obj_cube - CleanUp Event
+// This code will be executed once when instance destroyed
+
+// Garbage Collector (GC) won't clear vertex buffers 
+// We need to do it manually
+if (vertex_buffer_exists(vbuff)) {
+  vertex_delete_buffer(vbuff); 
+}</code></pre>
+
+        <p class="text-size-def">
+          Next object is <span class="hg_aqua">obj_camera</span> - 3D Camera. 
+          It will proceed our view and projection matrices. 
+          Also it will implement basic rotation and movement so 
+          we can fly in the game world.
+        </p>
+
+<pre><code class="language-gml">/// @desc obj_camera - Create Event
+// This code will be executed once when instance created
+x = 10;
+y = 10;
+z = -10;
+lookX = 0;
+lookY = 0;
+lookZ = 0;
+
+face = 45;
+pitch = 45;
+sensitivity = 10;
+movespeed = 1;
+
+// Projection Matrix
+fov = 60;
+aspect = 16/9;
+clipNear = 1;
+clipFar = 3200;
+matProj = matrix_build_projection_perspective_fov(fov, aspect, clipNear, clipFar);
+
+// View Matrix
+matView = [];
+
+// Camera
+camera = camera_create();
+
+Apply = function(pm = matProj, vm = matView) {
+  var _cam = camera;
+  camera_set_proj_mat(_cam, pm);
+  camera_set_view_mat(_cam, vm);	
+  camera_apply(_cam);
+}</code></pre>
+<pre><code class="language-gml">/// @desc obj_camera - Step Event
+// This code will execute every frame before any Draw (Render) event
+
+// Rotate camera
+var _w = display_get_width();
+var _h = display_get_height();
+var _mx = display_mouse_get_x();
+var _my = display_mouse_get_y();
+
+face  -= (_mx - _w / 2) / sensitivity;
+pitch -= (_my - _h / 2) / sensitivity;
+
+// Center the mouse cursor
+display_mouse_set(_w / 2, _h / 2);
+	
+// Move camera
+var _forward    = keyboard_check(ord("W"));
+var _backward   = keyboard_check(ord("S"));
+var _left	    = keyboard_check(ord("A"));
+var _right      = keyboard_check(ord("D"));
+var _up	        = keyboard_check(vk_space);
+var _down	    = keyboard_check(vk_lshift);
+
+var _moveFB = _forward - _backward;
+var _moveLR = _left - _right;
+var _moveUD = _up - _down;
+
+if (_moveFB != 0) {
+  x += lengthdir_x(movespeed * _moveFB, face);
+  y += lengthdir_y(movespeed * _moveFB, face);
+}
+
+if (_moveLR != 0) {
+  x += lengthdir_x(movespeed, face + 90 * _moveLR);
+  y += lengthdir_y(movespeed, face + 90 * _moveLR);
+}
+
+z -= movespeed * _moveUD;
+
+// Update View Matrix
+lookX = x + dcos(face);
+lookY = y - dsin(face);
+lookZ = z - dtan(pitch);
+
+matView = matrix_build_lookat(x, y, z, lookX, lookY, lookZ, 0, 0, 1);
+
+// End game when press `Escape`
+if (keyboard_check_pressed(vk_escape)) {
+  game_end();	
+}</code></pre>
+
+        <p class="text-size-def">
+          And the last - <span class="hg_aqua">obj_renderer</span>.
+          This object will control the entire render pipeline: 
+          GPU setting, shaders, render order, post-processing ect.<br>
+          Render is a complex process, and I'll cover important
+          topics like depth, culling, mipmapping and other 
+          techniques in the next article.
+        </p>
+
+<pre><code class="language-gml">/// @desc obj_renderer - Create Event
+// This code will be executed once when instance created
+
+// Turn off automatic default render - we will do it manually
+application_surface_draw_enable(false);
+</code></pre>
+<pre><code class="language-gml">/// @desc obj_renderer - Draw Event
+// This code will be executed every frame when game renders instances
+
+// Everything will be drawn on the `application_surface`
+// This is a default system render buffer
+
+// First, let's setup the GPU for 3D
+// Save current state, and then
+// turn on ZWrite and ZTest
+gpu_push_state();
+gpu_set_ztestenable(true);
+gpu_set_zwriteenable(true);
+
+// Clear game screen - fill it with black color
+draw_clear(c_black);
+
+// Set projection and view matrices from the camera
+with (obj_camera) {
+  Apply();
+}
+
+// Set shader and Render
+shader_set(shd_3d);
+
+with (obj_cube) {
+  Render();
+}
+
+shader_reset();
+gpu_pop_state();</code></pre>
+<pre><code class="language-gml">/// @desc obj_renderer - Post-Draw Event
+// This code will be executed every frame when game renders views on game window
+
+// Displays the contents of the application surface 
+// stretched to fit the game window
+var _ww = window_get_width(), _wh = window_get_height();
+draw_surface_stretched(application_surface, 0, 0, _ww, _wh);
+</code></pre>
+
+        <p class="text-size-def">
+          The final step before we run our game! Thank goodness it's the easiest one~<br>
+          You need to find (or create) any <span class="hg_green">Room</span> in the Asset Browser. By default it's called <span class="hg_aqua">Room1</span>.
+          You can rename it, for example - <span class="hg_aqua">rm_one</span>.<br>
+          Double click on it, and the <span class="hg_yellow">Room Editor</span> window will be opened.<br><br>
+          All that you need to do is just <span class="hg_green">dran-n-drop our three objects - obj_cube, obj_camera, obj_renderer</span> - from
+          the Asset Browser somewhere in the Room. There are default "Instances" layer for it. Done!
+        </p>
+
+      </div>
+
+      <!-- Play! -->
+      <div id="play" class="yomogi-regular">
+        <p class="subheader">Play it!</p>
+        <p class="text-size-def">
+          Just press <span class="hg_green">F5</span> (or using menu bar, Build->Run) - it will <span class="hg_green">build and lauch the game</span>.<br><br>
+          Probably the first thing you see is a pitch-black window. Just rotate the camera by mouse or move
+          around the world by WASD keys. Then you will see our cube!
+        </p>
+
+         <img src="../../../img/screenshots/001/ingame.png" alt="the cube!" class="picture" style="width: 640px; height: 360px;">
+      </div>
+
+      <!-- Conclusion -->
+      <div id="conclusion" class="yomogi-regular">
+        <p class="subheader">Conclusion</p>
+
+        <img src="../../../img/lucky-star-anime.gif" alt="Me" class="picture" style="width: 256; height: 256px;">
+
+        <p class="text-size-def">
+          In this article, <span class="hg_green">we managed to create a simple scene with a simple 3D object</span> - cube, and also be able to examine it from all sides!
+          <br><br>
+          Of course, This is still far from a real 3D game, but the first brick has been laid. 
+          For the sake of simplicity, I had to omit some details that will be discussed in the following articles.
+        </p>
+      </div>
+
+      <!-- Todo -->
+      <div class="section-important" style="margin-top: 100px; width: 98%;">
+        <img src="../../../img/serufu-in-progress.webp" alt="In Progress" calss="left-image" style="height: 400px;">
+        <p class="text-code text-size-def" style="padding-right: 30px;">
+          <!--
+          This page is still under development. There will be a continuation here soon.<br><br>
+          -->
+          Thank you for reading!<br><br>
+          If you liked the article, you can share it and/or write your impressions and wishes to me personally in the 
+          <a id="navlink" href="https://nishort.atabook.org/" target="_blank">guest book</a>.
+          <br><br>
+          @Nick_Nishort
+          <br><br><a id="navlink" href="../../home.html">Go to home page</a>
+        </p>
+      </div>
+    
+    </div>
+
+    <script src="../../prism.js"></script>
+  </body>
+</html>
